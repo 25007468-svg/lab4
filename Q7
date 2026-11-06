@@ -1,0 +1,36 @@
+import java.util.Scanner;
+
+public class L4Q7 {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.print("Enter principal amount: ");
+        double p = scanner.nextDouble();
+        
+        System.out.print("Enter interest in %: ");
+        double i = scanner.nextDouble();
+        
+        System.out.print("Enter total number of month(s): ");
+        int n = scanner.nextInt();
+        
+        double monthlyRate = i / (12 * 100);
+        double m = (p * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -n));
+        
+        System.out.println("\nMonth\tMonthly Payment\tPrincipal\tInterest\tUnpaid Balance\tTotal Interest");
+        
+        double unpaidBalance = p;
+        double totalInterest = 0;
+        
+        for (int month = 1; month <= n; month++) {
+            double c = m * Math.pow(1 + monthlyRate, -(1 + n - month));
+            double l = m - c;
+            unpaidBalance -= c;
+            totalInterest += l;
+            
+            System.out.printf("%-7d %-15.2f %-15.2f %-15.2f %-15.2f %-15.2f\n", 
+                              month, m, c, l, Math.abs(unpaidBalance), totalInterest);
+        }
+        
+        scanner.close();
+    }
+}
