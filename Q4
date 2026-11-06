@@ -1,0 +1,47 @@
+import java.util.Scanner;
+
+public class L4Q4 {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.print("Enter year: ");
+        int year = scanner.nextInt();
+        System.out.print("Enter the first day of the year (0 for Sun, 1 for Mon, ..., 6 for Sat): ");
+        int firstDay = scanner.nextInt();
+        
+        boolean isLeapYear = (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+        int[] daysInMonth = {31, isLeapYear ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+        String[] months = {"January", "February", "March", "April", "May", "June", 
+                          "July", "August", "September", "October", "November", "December"};
+        
+        // Find first day for May (month index 4) and August (month index 7)
+        int currentDay = firstDay;
+        for (int month = 0; month < 12; month++) {
+            if (month == 4 || month == 7) {
+                printCalendar(months[month], year, daysInMonth[month], currentDay);
+            }
+            currentDay = (currentDay + daysInMonth[month]) % 7;
+        }
+        
+        scanner.close();
+    }
+    
+    public static void printCalendar(String monthName, int year, int days, int startDay) {
+        System.out.println("\n------------------------------------");
+        System.out.printf("          %s %d          \n", monthName, year);
+        System.out.println("------------------------------------");
+        System.out.println("  Sun  Mon  Tue  Wed  Thu  Fri  Sat");
+        
+        for (int i = 0; i < startDay; i++) {
+            System.out.print("     ");
+        }
+        
+        for (int day = 1; day <= days; day++) {
+            System.out.printf("%5d", day);
+            if ((day + startDay) % 7 == 0) {
+                System.out.println();
+            }
+        }
+        System.out.println("\n------------------------------------");
+    }
+}
